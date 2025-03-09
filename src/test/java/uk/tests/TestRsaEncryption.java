@@ -27,11 +27,15 @@ public class TestRsaEncryption {
         BigInteger message = BigInteger.valueOf(randomMessage);
         System.out.println("Original message: " + message);
 
+        // sign message
+
         BigInteger cipherMessage = rsaEncryption.encryptMessage(keyPair2, message);
         System.out.println("encrypted message: " + cipherMessage);
 
         BigInteger decryptedMessage = rsaEncryption.decryptMessage(keyPair2, cipherMessage);
         System.out.println("decrypted message: " + decryptedMessage);
+
+        // validate signature
 
         assertNotEquals(message, cipherMessage);
         assertEquals(message, decryptedMessage);
