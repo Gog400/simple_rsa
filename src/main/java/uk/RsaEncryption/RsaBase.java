@@ -1,22 +1,32 @@
 package uk.RsaEncryption;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.Random;
 
 public class RsaBase {
 
-    public static final int MIN_NUMBER = 2; // 1024
-    public static final int MAX_NUMBER = 29; // 4096
-    public static final Random rand = new Random();
+    public static final int BIT_LENGTH = 512;
+    public static final Random rand = new SecureRandom();
 
-    protected int findProduct(int p, int q) {
-        return p * q;
+    protected BigInteger findProduct(BigInteger p, BigInteger q) {
+        return p.multiply(q);
     }
 
-    protected int findTotient(int p, int q) {
-        return (p - 1) * (q - 1);
+    protected BigInteger findTotient(BigInteger p, BigInteger q) {
+        BigInteger pSub = p.subtract(BigInteger.ONE);
+        BigInteger qSub = q.subtract(BigInteger.ONE);
+
+        return pSub.multiply(qSub);
     }
 
-    protected static int randInt(int min, int max) {
-        return rand.nextInt((max - min) + 1) + min;
+    protected static BigInteger randPrime() {
+        return BigInteger.probablePrime(BIT_LENGTH, rand);
+    }
+
+    protected static void regenerateIfPrimesAreEqual(BigInteger p, BigInteger q) {
+        while (p.compareTo(q) == 0) {
+            q = randPrime();
+        }
     }
 }

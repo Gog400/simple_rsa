@@ -3,38 +3,35 @@ package uk.RsaEncryption;
 import uk.RsaEncryption.Entity.GenerationDetails;
 import uk.RsaEncryption.Entity.KeyPairEntity;
 
-import static org.apache.commons.math3.primes.Primes.nextPrime;
+import java.math.BigInteger;
 
 public class KeyGenerator extends RsaBase{
 
     public static final RsaValidation rsaValidation = new RsaValidation();
 
-    private int generatePublicKey(int totient) {
-        int publicKey = nextPrime(randInt(MIN_NUMBER, totient));
-        while (rsaValidation.checkIfPublicKeyIsValid(publicKey, totient)) { // ToDO kinda ugly
-            publicKey = nextPrime(randInt(MIN_NUMBER, totient));
+    private BigInteger generatePublicKey(BigInteger totient) {
+        BigInteger publicKey = randPrime();
+        while (!rsaValidation.checkIfPublicKeyIsValid(publicKey, totient)) { // ToDO kinda ugly
+            publicKey = randPrime();
         }
 
         return publicKey;
     }
 
-    private int generatePrivateKey(int publicKey, int totient) {
-        int privateKey = randInt(MIN_NUMBER, MAX_NUMBER);
-        while (rsaValidation.checkIfPrivateKeyIsValid(publicKey, privateKey, totient)) { // ToDO kinda ugly
-            privateKey = randInt(MIN_NUMBER, MAX_NUMBER);
-        }
-
-        return privateKey;
+    private BigInteger generatePrivateKey(BigInteger publicKey, BigInteger totient) {
+        return publicKey.modInverse(totient);
     }
 
     public KeyPairEntity generateKeyPair() {
-        int p = nextPrime(randInt(MIN_NUMBER, MAX_NUMBER));
-        int q = nextPrime(randInt(MIN_NUMBER, MAX_NUMBER));
-        int product = findProduct(p, q);
-        int totient = findTotient(p, q);
+        BigInteger p = randPrime();
+        BigInteger q = randPrime();
+        regenerateIfPrimesAreEqual(p, q);
 
-        int publicKey = generatePublicKey(totient);
-        int privateKey = generatePrivateKey(publicKey, totient);
+        BigInteger product = findProduct(p, q);
+        BigInteger totient = findTotient(p, q);
+
+        BigInteger publicKey = generatePublicKey(totient);
+        BigInteger privateKey = generatePrivateKey(publicKey, totient);
 
         return new KeyPairEntity(
                 publicKey,

@@ -4,14 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.math.BigInteger;
+
 @Getter
 @AllArgsConstructor
 @Builder
 public class KeyPairEntity {
 
-    private int publicKey;
+    private BigInteger publicKey;
 
-    private int privateKey;
+    private BigInteger privateKey;
 
     private GenerationDetails generationDetails;
 

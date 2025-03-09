@@ -1,14 +1,14 @@
 package uk.RsaEncryption;
 
-import static org.apache.commons.math3.primes.Primes.isPrime;
+import java.math.BigInteger;
 
 public class RsaValidation {
 
-    public boolean checkIfPublicKeyIsValid(int publicKey, int totient) {
-        return (isPrime(publicKey)) && (publicKey > totient) && (totient % publicKey != 0);
-    }
+    public boolean checkIfPublicKeyIsValid(BigInteger publicKey, BigInteger totient) {
+        boolean isPrime = publicKey.isProbablePrime(1);
+        boolean isLessThanTotient = publicKey.compareTo(totient) < 0;
+        boolean isNotAFactorOfATotient = totient.mod(publicKey).compareTo(BigInteger.ZERO) != 0;
 
-    public boolean checkIfPrivateKeyIsValid(int publicKey, int privateKey, int totient) {
-        return (publicKey * privateKey) / totient == 1;
+        return isPrime && isLessThanTotient && isNotAFactorOfATotient;
     }
 }

@@ -3,17 +3,19 @@ package uk.RsaEncryption.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.math.BigInteger;
+
 @Getter
 @AllArgsConstructor
 public class GenerationDetails {
 
-    private int p;
+    private BigInteger p;
 
-    private int q;
+    private BigInteger q;
 
-    private int product;
+    private BigInteger product;
 
-    private int totient;
+    private BigInteger totient;
 
     @Override
     public String toString() {

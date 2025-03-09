@@ -2,20 +2,15 @@ package uk.RsaEncryption;
 
 import uk.RsaEncryption.Entity.KeyPairEntity;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public class RsaEncryption {
 
-    public BigDecimal encryptMessage(KeyPairEntity keyPair, int message) {
-        BigDecimal power = BigDecimal.valueOf(message).pow(keyPair.getPublicKey());
-        BigDecimal product = BigDecimal.valueOf(keyPair.getGenerationDetails().getProduct());
-        return power.remainder(product);
+    public BigInteger encryptMessage(KeyPairEntity keyPair, BigInteger message) {
+        return message.modPow(keyPair.getPublicKey(), keyPair.getGenerationDetails().getProduct());
     }
 
-    public BigDecimal decryptMessage(KeyPairEntity keyPair, BigDecimal cipherMessage) {
-        BigDecimal power = cipherMessage.pow(keyPair.getPrivateKey());
-        BigDecimal product = BigDecimal.valueOf(keyPair.getGenerationDetails().getProduct());
-
-        return power.remainder(product);
+    public BigInteger decryptMessage(KeyPairEntity keyPair, BigInteger cipherMessage) {
+        return cipherMessage.modPow(keyPair.getPrivateKey(), keyPair.getGenerationDetails().getProduct());
     }
 }
