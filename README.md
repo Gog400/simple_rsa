@@ -5,7 +5,8 @@ end: tba (mwp 03/11/2025)
 implemented:
 1) asymmetric encryption using RSA algorithm
 2) public/private key generator
-3) text encoding
+3) symmetric signature verification
+4) text encoding
 
 todo:
 1) optimise byte encoding/decoding
