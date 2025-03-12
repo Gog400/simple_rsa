@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 public class TestRsaEncryption {
 
     @ParameterizedTest(name = "[{index}] Used message: {arguments})")
-    @ValueSource(strings = {"311", "231431", "12", "93130", "231dsad", "dsadfvD"})
+    @ValueSource(strings = {"311", "231431", "12", "93130", "231dsad", "dsadfvD", "hello world"})
     @DisplayName("Check RSA encryption with random message. Positive case.")
     public void successRsaEncryption(String message) {
         KeyGenerator keyGenerator = new KeyGenerator();
