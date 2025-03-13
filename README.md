@@ -9,7 +9,8 @@ implemented:
 4) text encoding
 
 todo:
-1) optimise byte encoding/decoding
-2) Base64 message encoding/decoding(if needed)
-3) autotests
-4) custom hashing algorithm
+1) AES algo for bulk data transfer and onlt symmetric key exchange using RSA
+2) optimise byte encoding/decoding
+3) Base64 message encoding/decoding(if needed)
+4) autotests
+5) custom hashing algorithm
